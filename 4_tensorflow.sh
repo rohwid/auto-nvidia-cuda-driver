@@ -32,7 +32,11 @@ sudo pip3 install -U --user keras_preprocessing==1.0.3 --no-deps
 read -n1 -r -p "Clone TensorFlow from GitHub. press ENTER to continue!" ENTER
 git clone https://github.com/tensorflow/tensorflow.git
 cd tensorflow
-git checkout r1.12
+
+TSVER="r1.12"
+
+read -p "Please specify TensorFlow version to be install [Default: r1.12]:" TSVER
+git checkout ${TSVER}
 
 echo "====================================================================================="
 echo "IMPORATANT Note to configure TensorFlow for GPU"
@@ -67,7 +71,7 @@ bazel-bin/tensorflow/tools/pip_package/build_pip_package tensorflow_pkg
 
 read -n1 -r -p "Install TensorFlow. press ENTER to continue!" ENTER
 
-PYVER="3"
+PYVER=3
 
 read -p "Please specify python version to install TensorFlow [2 or 3]:" PYVER
 
