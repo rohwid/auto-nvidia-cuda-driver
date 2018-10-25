@@ -1,0 +1,22 @@
+# Python
+.ipynb_checkpoints
+*.pyc
+__pycache__
+*.egg-info
+build/*
+dist/*
+*~
+.cache
+.coverage
+checkpoint
+htmlcov
+mnist
+
+# OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+# Cuda installer
+cuda_*
+cudnn-*
+nccl_*
