@@ -5,7 +5,7 @@ echo "Welcome to NVIDIA Driver Installer"
 echo "====================================================================================="
 read -n1 -r -p "Install the dependencies. press ENTER to continue!" ENTER
 sudo apt update
-sudo apt install openjdk-8-jdk git python-dev python3-dev python-numpy cmake unzip zip \
+sudo apt install openjdk-8-jdk git python-dev python3-dev python-numpy python3-tk cmake unzip zip \
  python3-numpy python-six python3-six build-essential python-pip python3-pip python-virtualenv \
  swig python-wheel python3-wheel libcurl3-dev libcupti-dev -y
 
