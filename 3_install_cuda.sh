@@ -1,9 +1,5 @@
 #!/bin/bash
 
-CUDA="cuda_10.0.130_410.48_linux.run"
-CUDNN="cudnn-10.0-linux-x64-v7.3.1.20.tgz"
-NCCL="nccl_2.3.5-2+cuda10.0_x86_64.txz"
-
 cuda() {
   read -n1 -r -p "Install CUDA. press ENTER to continue!" ENTER
   if [[ -f installer/${CUDA} ]]; then
@@ -12,12 +8,12 @@ cuda() {
     echo "[CUDA-TSFLOW] CUDA Installation done."
     echo " "
 
-    UPDATE="N"
-
     read -p "Do you have CUDA update patch? [y/N]: " UPDATE
-    if [ UPDATE -eq N ] || [ UPDATE -eq n ]; then
+    UPDATE="${UPDATE:=N}"
+
+    if [[ UPDATE -eq N ]] || [[ UPDATE -eq n ]]; then
       cudnn
-    elif [ UPDATE -eq Y ] || [UPDATE -eq y ]; then
+    elif [[ UPDATE -eq Y ]] || [[ UPDATE -eq y ]]; then
       echo 'Here the content of "installer" directory:'
       ls installer/
       echo " "
@@ -31,13 +27,13 @@ cuda() {
 
       cudnn
     else
-      echo "[CUDA-TSFLOW] CUDA installer not found."
-      echo "[CUDA-TSFLOW] Installation failed"
+      echo "[CUDA-TSFLOW] Input invalid."
+      echo "[CUDA-TSFLOW] Installation aborted."
       exit
     fi
   else
     echo "[CUDA-TSFLOW] CUDA installer not found."
-    echo "[CUDA-TSFLOW] CUDA installation failed"
+    echo "[CUDA-TSFLOW] Installation aborted"
     exit
   fi
 }
@@ -103,8 +99,11 @@ ls installer/
 echo " "
 
 read -p "Please specify CUDA installer file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
+CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
 read -p "Please specify CDNN installer file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
+CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
 read -p "Please specify NCCL installer file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
+NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
 echo " "
 
 read -n1 -r -p "Check nvidia driver is installed correctly. press ENTER to continue!" ENTER
@@ -121,6 +120,7 @@ fi
 
 cuda
 nccl
+
 
 echo "[CUDA-TSFLOW] CUDA Installation done."
 echo " "

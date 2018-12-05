@@ -1,43 +1,26 @@
 #!/bin/bash
 
 echo "====================================================================================="
-echo "Welcome to Tensorflow Manual Installer"
+echo "TENSORFLOW MANUAL COMPILATION FOR INSTALL AND UPDATE"
 echo "====================================================================================="
-read -n1 -r -p "Install Bezel in ubuntu. press ENTER to continue!" ENTER
-echo "[CUDA-TSFLOW] Installing Bezel dependencies.."
-sudo apt-get install gcc-4.8 g++-4.8
-sudo apt install curl
+echo "WARNING! Make sure you've run in Python Virtual Enviroment!"
+echo "This script is only can run in Virtual Enviroment."
+echo " "
 
-echo "[CUDA-TSFLOW] Adding Bezel repositories.."
-echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
-curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
-
-echo "[CUDA-TSFLOW] Updating package.."
-sudo apt update
-
-echo "[CUDA-TSFLOW] Installing Bezel.."
-sudo apt install bazel
-sudo apt upgrade bazel
-
-echo "[CUDA-TSFLOW] Bezel Installation done."
-
-read -n1 -r -p "Install TensorFlow dependencies. press ENTER to continue!" ENTER
-pip install -U --user pip six numpy wheel mock
-pip3 install -U --user pip six numpy wheel mock
-sudo pip install -U --user keras_applications==1.0.5 --no-deps
-sudo pip3 install -U --user keras_applications==1.0.5 --no-deps
-sudo pip install -U --user keras_preprocessing==1.0.3 --no-deps
-sudo pip3 install -U --user keras_preprocessing==1.0.3 --no-deps
+pip install -U pip six numpy wheel mock
+pip install -U keras_applications==1.0.5 --no-deps
+pip install -U keras_preprocessing==1.0.3 --no-deps
 
 read -n1 -r -p "Clone TensorFlow from GitHub. press ENTER to continue!" ENTER
 git clone https://github.com/tensorflow/tensorflow.git
 cd tensorflow
 
-TSVER="r1.12"
-
 read -p "Please specify TensorFlow version to be install [Default: r1.12]:" TSVER
+TSVER="${TSVER:=r1.12}"
+
 git checkout ${TSVER}
 
+echo " "
 echo "====================================================================================="
 echo "IMPORATANT Note to configure TensorFlow for GPU"
 echo "====================================================================================="
@@ -70,21 +53,18 @@ read -n1 -r -p "Build TensorFlow installer package with bazel. press ENTER to co
 bazel-bin/tensorflow/tools/pip_package/build_pip_package tensorflow_pkg
 
 read -n1 -r -p "Install TensorFlow. press ENTER to continue!" ENTER
-
-PYVER=3
-
-read -p "Please specify python version to install TensorFlow [2 or 3]:" PYVER
-
 cd tensorflow_pkg
 
-if [[ PYVER -eq 3 ]]; then
-  echo "[CUDA-TSFLOW] Installing TensorFlow in python2.."
-  sudo pip3 install tensorflow*.whl
-elif [[ PYVER -eq 2 ]]; then
-  echo "[CUDA-TSFLOW] Installing TensorFlow in python3.."
-  sudo pip3 install tensorflow*.whl
+read -p "Do want install tensorflow now? [Y/n]: " DEP
+DEP="${DEP:=Y}"
+
+if [[ DEP -eq Y ]] || [[ DEP -eq y ]]; then
+  sudo pip install tensorflow*.whl
+  echo "[CUDA-TSFLOW] TensorFlow GPU was installed in this Virtual Enviroment."
+  echo "[CUDA-TSFLOW] Installation finished."
 else
-  echo "[CUDA-TSFLOW] Python version invalid."
-  echo "[CUDA-TSFLOW] Installation failed"
+  echo "[CUDA-TSFLOW] TensorFlow GPU installation package has created."
+  echo "[CUDA-TSFLOW] TensorFlow GPU installation package was on $(pwd)."
+  echo "[CUDA-TSFLOW] Compilation finished."
   exit
 fi
