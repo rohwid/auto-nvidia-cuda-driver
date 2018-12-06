@@ -31,7 +31,7 @@ read -n1 -r -p "Create your virtual environment. press ENTER to continue!" ENTER
 read -p "Enter the name of your virtual environment: " VENV
 VENV="${VENV:=tensorflow-gpu}"
 
-virtualenv ~/PyEnvironment/$VENV -p /usr/bin/python3
+virtualenv -p /usr/bin/python3 ~/PyEnvironment/$VENV
 
 echo "[CUDA-TSFLOW] Setup Environment done."
 echo " "
