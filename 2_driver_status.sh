@@ -13,7 +13,7 @@ driver() {
   ubuntu-drivers devices
 }
 
-intalled() {
+installed() {
   lsmod | grep nvidia
 }
 

@@ -16,8 +16,11 @@ echo "[CUDA-TSFLOW] Updating package.."
 sudo apt update
 
 echo "[CUDA-TSFLOW] Installing Bezel.."
-sudo apt install bazel
-sudo apt upgrade bazel
+cd ~
+wget https://github.com/bazelbuild/bazel/releases/download/0.17.2/bazel-0.17.2-installer-linux-x86_64.sh
+chmod +x bazel-0.17.2-installer-linux-x86_64.sh
+./bazel-0.17.2-installer-linux-x86_64.sh --user
+echo 'export PATH="$PATH:$HOME/bin"' >> ~/.bashrc
 
 echo "[CUDA-TSFLOW] Bezel Installation done."
 
@@ -28,7 +31,7 @@ read -n1 -r -p "Create your virtual environment. press ENTER to continue!" ENTER
 read -p "Enter the name of your virtual environment: " VENV
 VENV="${VENV:=tensorflow-gpu}"
 
-virtualenv ~/PyEnvironment/$VENV
+virtualenv ~/PyEnvironment/$VENV -p /usr/bin/python3
 
 echo "[CUDA-TSFLOW] Setup Environment done."
 echo " "

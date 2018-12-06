@@ -17,8 +17,15 @@ sudo apt dist-upgrade -y
 read -n1 -r -p "Check nvidia driver to be install. press ENTER to continue!" ENTER
 ubuntu-drivers devices
 
-read -n1 -r -p "Install nvidia driver. press ENTER to continue!" ENTER
-sudo ubuntu-drivers autoinstall
+read -p "Do you want to install NVIDIA driver automatically? [Y/n]: " ENTER
+
+if [[ MAN -eq "Y" ]] || [[ MAN -eq "y" ]]; then
+  sudo ubuntu-drivers autoinstall
+else
+  read -p "Please enter the NVIDIA driver version: " version
+  sudo apt install nvidia-driver-$VER -y
+fi
+
 
 read -n1 -r -p "Reboot to load the changes. press ENTER to continue!" ENTER
 sudo reboot

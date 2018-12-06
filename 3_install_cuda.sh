@@ -20,7 +20,7 @@ cuda() {
 
       read -p "How many CUDA update patch do you have? " NO_PATCH
 
-      for i in $NO_PATCH;do
+      for i in $NO_PATCH; do
         read -p "Please specify CUDA update patch no. $i: " CUPDATE
         sudo sh installer/${CUPDATE} --override --silent --toolkit
       done
@@ -42,17 +42,18 @@ cudnn() {
   read -n1 -r -p "Install CUDNN. press ENTER to continue!" ENTER
   if [[ -f installer/${CUDNN} ]]; then
     echo "[CUDA-TSFLOW] Installing CUDNN.."
+
     mkdir installer/cudnn
     tar -xzvf installer/${CUDNN} -C installer/cudnn --strip-components=1
-    sudo cp cuda/include/cudnn.h /usr/local/cuda/include
-    sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+    sudo cp installer/cudnn/include/cudnn.h /usr/local/cuda/include
+    sudo cp installer/cudnn/lib64/libcudnn* /usr/local/cuda/lib64
     sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 
     echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
     echo " " >> ~/.bashrc
     echo "# CUDA Enviroment"
-    echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64' >> ~/.bashrc
-    echo 'export CUDA_HOME=/usr/local/cuda'
+    echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
+    echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
   else
     echo "[CUDA-TSFLOW] CUDNN installer not found."
     echo "[CUDA-TSFLOW] CUDNN installation failed"
@@ -111,10 +112,25 @@ ubuntu-drivers devices
 lsmod | grep nvidia
 
 echo "[CUDA-TSFLOW] Checking CUDA in your computer.."
-if [[ -l /usr/local/cuda ]]; then
+if [[ -L /usr/local/cuda ]]; then
   echo "[CUDA-TSFLOW] CUDA has installed in your system."
-  echo "[CUDA-TSFLOW] Clean previous CUDA Installation and re-install!"
+
+  if [[ -f /usr/local/cuda/include/cudnn.h ]]; then
+    echo "[CUDA-TSFLOW] CUDNN has installed in your system."
+  fi
+
+  echo "[CUDA-TSFLOW] Clean previous CUDA Installation if you want to re-install!"
   echo "[CUDA-TSFLOW] CUDA installation canceled."
+  echo " "
+  echo "====================================================================================="
+  echo "CUDA Post Installation Notes"
+  echo "====================================================================================="
+  echo "Run this command to delete exisisting CUDA version."
+  echo "$ sudo rm /usr/local/cuda*"
+  echo " "
+  echo "====================================================================================="
+  echo " "
+
   exit
 fi
 

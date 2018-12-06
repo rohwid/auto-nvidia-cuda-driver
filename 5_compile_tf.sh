@@ -33,11 +33,12 @@ echo "Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]: N"
 echo "Do you wish to build TensorFlow with ROCm support? [y/N]: N"
 echo "Do you wish to build TensorFlow with CUDA support? [y/N]: Y"
 echo "Please specify the CUDA SDK version you want to use. [Leave empty to default to CUDA 9.0]: 10.0"
-echo "Please specify the location where CUDA 10.0 toolkit is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: /usr/local/cuda-10.0"
+echo "Please specify the location where CUDA 10.0 toolkit is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: /usr/local/cuda"
 echo "Please specify the cuDNN version you want to use. [Leave empty to default to cuDNN 7]: 7.3.1"
-echo "Please specify the location where cuDNN 7 library is installed. Refer to README.md for more details. [Default is /usr/local/cuda-10.0]: /usr/local/cuda/targets/x86_64-linux"
+echo "Please specify the location where cuDNN 7 library is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: /usr/local/cuda/"
 echo "Do you wish to build TensorFlow with TensorRT support? [y/N]: N"
 echo "Please specify the NCCL version you want to use. If NCCL 2.2 is not installed, then you can use version 1.3 that can be fetched automatically but it may have worse performance with multiple GPUs. [Default is 2.2]: 2.3.5"
+echo "Please specify the location where NCCL library is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: /usr/local/cuda/targets/x86_64-linux"
 echo "Please note that each additional compute capability significantly increases your build time and binary size. [Default is: 5.0] 5.0"
 echo "Do you want to use clang as CUDA compiler? [y/N]: N"
 echo "Please specify which gcc should be used by nvcc as the host compiler. [Default is /usr/bin/gcc]: /usr/bin/gcc"
@@ -48,6 +49,9 @@ echo " "
 echo "====================================================================================="
 
 ./configure
+
+read -n1 -r -p "Build TensorFlow installer package with bazel. press ENTER to continue!" ENTER
+bazel-bin/tensorflow/tools/pip_package/build_pip_package tensorflow_pkg
 
 read -n1 -r -p "Build TensorFlow installer package with bazel. press ENTER to continue!" ENTER
 bazel-bin/tensorflow/tools/pip_package/build_pip_package tensorflow_pkg
