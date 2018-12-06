@@ -50,8 +50,8 @@ echo "==========================================================================
 
 ./configure
 
-read -n1 -r -p "Build TensorFlow installer package with bazel. press ENTER to continue!" ENTER
-bazel-bin/tensorflow/tools/pip_package/build_pip_package tensorflow_pkg
+read -n1 -r -p "Build TensorFlow pip package with bazel. press ENTER to continue!" ENTER
+bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
 
 read -n1 -r -p "Build TensorFlow installer package with bazel. press ENTER to continue!" ENTER
 bazel-bin/tensorflow/tools/pip_package/build_pip_package tensorflow_pkg
