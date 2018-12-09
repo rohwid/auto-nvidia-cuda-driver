@@ -67,9 +67,8 @@ nccl() {
     echo "[CUDA-TSFLOW] Installing NCCL.."
     mkdir installer/nccl
     tar Jxvf installer/${NCCL} -C installer/nccl/ --strip-components=1
-    sudo cp -R installer/nccl/lib/libnccl* /usr/local/cuda/lib64/
-    sudo cp -R installer/nccl/include/nccl.h /usr/local/cuda/include/
-    sudo ldconfig
+    sudo cp installer/nccl/lib/libnccl* /usr/local/cuda/lib64/
+    sudo cp installer/nccl/include/nccl.h /usr/local/cuda/include/
   else
     echo "[CUDA-TSFLOW] NCCL installer not found."
     echo "[CUDA-TSFLOW] NCCL installation failed"
@@ -136,6 +135,7 @@ fi
 cuda
 nccl
 
+sudo ldconfig
 
 echo "[CUDA-TSFLOW] CUDA Installation done."
 echo " "
