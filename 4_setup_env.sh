@@ -15,23 +15,27 @@ curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
 echo "[CUDA-TSFLOW] Updating package.."
 sudo apt update
 
-echo "[CUDA-TSFLOW] Installing Bezel.."
-cd ~
-wget https://github.com/bazelbuild/bazel/releases/download/0.17.2/bazel-0.17.2-installer-linux-x86_64.sh
-chmod +x bazel-0.17.2-installer-linux-x86_64.sh
-./bazel-0.17.2-installer-linux-x86_64.sh --user
-echo 'export PATH="$PATH:$HOME/bin"' >> ~/.bashrc
+echo "[CUDA-TSFLOW] Installing Bezel (bazel-0.17.2). This version is recomended .."
+wget https://github.com/bazelbuild/bazel/releases/download/0.17.2/bazel-0.17.2-installer-linux-x86_64.sh -P installer
+
+chmod +x installer/bazel-0.17.2-installer-linux-x86_64.sh
+
+mkdir $HOME/Bazel
+
+./installer/bazel-0.17.2-installer-linux-x86_64.sh --prefix=$HOME/Bazel
+
+echo 'export PATH="$PATH:$HOME/Bazel/bin"' >> ~/.bashrc
 
 echo "[CUDA-TSFLOW] Bezel Installation done."
 
 read -n1 -r -p "Setup python virtual environment. press ENTER to continue!" ENTER
 pip3 install virtualenv
 
-read -n1 -r -p "Create your virtual environment. press ENTER to continue!" ENTER
-read -p "Enter the name of your virtual environment: " VENV
+read -p "Enter the name of your virtual environment [Default: tensorflow-gpu]: " VENV
 VENV="${VENV:=tensorflow-gpu}"
 
-virtualenv -p /usr/bin/python3 ~/PyEnvironment/$VENV
+mkdir $HOME/PyEnvironment
+virtualenv -p /usr/bin/python3 $HOME/PyEnvironment/$VENV
 
 echo "[CUDA-TSFLOW] Setup Environment done."
 echo " "
