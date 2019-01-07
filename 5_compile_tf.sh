@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "====================================================================================="
+echo "==============================================================================================="
 echo "TENSORFLOW MANUAL COMPILATION FOR INSTALL AND UPDATE"
-echo "====================================================================================="
+echo "==============================================================================================="
 echo "WARNING! Make sure you've run in Python Virtual Enviroment!"
 echo "This script is only can run in Virtual Enviroment."
 echo " "
@@ -21,9 +21,9 @@ TSVER="${TSVER:=r1.12}"
 git checkout ${TSVER}
 
 echo " "
-echo "====================================================================================="
+echo "==============================================================================================="
 echo "IMPORATANT Note to configure TensorFlow for GPU"
-echo "====================================================================================="
+echo "==============================================================================================="
 echo "Here is the RECOMENDATION answer to configure tensorflow for GPU: "
 echo " "
 echo "Please specify the location of python. [Default is /usr/bin/python]: /usr/bin/python3"
@@ -46,7 +46,7 @@ echo "Do you wish to build TensorFlow with MPI support? [y/N]: N"
 echo 'Please specify optimization flags to use during compilation when bazel option "--config=opt" is specified [Default is -march=native]: -march=native'
 echo "Would you like to interactively configure ./WORKSPACE for Android builds? [y/N]:N"
 echo " "
-echo "====================================================================================="
+echo "==============================================================================================="
 
 ./configure
 
