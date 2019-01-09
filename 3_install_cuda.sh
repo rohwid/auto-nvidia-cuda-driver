@@ -51,7 +51,7 @@ cudnn() {
 
     echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
     echo " " >> ~/.bashrc
-    echo "# CUDA Enviroment" >> ~/.bashrc
+    echo '# CUDA Enviroment' >> ~/.bashrc
     echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
     echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
   else
@@ -124,7 +124,7 @@ if [[ -L /usr/local/cuda ]]; then
   echo "CUDA Post Installation Notes"
   echo "==============================================================================================="
   echo "Run this command to delete exisisting CUDA version."
-  echo "$ sudo rm /usr/local/cuda*"
+  echo "$ sudo rm -r /usr/local/cuda*"
   echo " "
   echo "==============================================================================================="
   echo " "
