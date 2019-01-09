@@ -20,3 +20,4 @@ mnist
 cuda_*
 cudnn-*
 nccl_*
+bazel-*

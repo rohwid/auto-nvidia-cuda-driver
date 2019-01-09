@@ -11,9 +11,9 @@ cuda() {
     read -p "Do you have CUDA update patch? [y/N]: " UPDATE
     UPDATE="${UPDATE:=N}"
 
-    if [[ UPDATE -eq N ]] || [[ UPDATE -eq n ]]; then
+    if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
       cudnn
-    elif [[ UPDATE -eq Y ]] || [[ UPDATE -eq y ]]; then
+    elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
       echo 'Here the content of "installer" directory:'
       ls installer/
       echo " "
@@ -22,7 +22,7 @@ cuda() {
 
       for i in $NO_PATCH; do
         read -p "Please specify CUDA update patch no. $i: " CUPDATE
-        sudo sh installer/${CUPDATE} --override --silent --toolkit
+        sudo sh installer/${CUPDATE} --silent --accept-eula
       done
 
       cudnn
@@ -50,10 +50,22 @@ cudnn() {
     sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 
     echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
-    echo " " >> ~/.bashrc
-    echo '# CUDA Enviroment' >> ~/.bashrc
-    echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
-    echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
+    read -p "Have you set the cuda in ~./bashrc? [y/N]: "
+    UPDATE="${UPDATE:=N}"
+    if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
+      nccl
+    elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
+      echo " " >> ~/.bashrc
+      echo '# CUDA Enviroment' >> ~/.bashrc
+      echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
+      echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
+
+      nccl
+    else
+      echo "[CUDA-TSFLOW] Input invalid."
+      echo "[CUDA-TSFLOW] Installation aborted."
+      exit
+    fi
   else
     echo "[CUDA-TSFLOW] CUDNN installer not found."
     echo "[CUDA-TSFLOW] CUDNN installation failed"
@@ -97,14 +109,6 @@ echo 'Here the content of "installer" directory:'
 ls installer/
 echo " "
 
-read -p "Please specify CUDA installer file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
-CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
-read -p "Please specify CDNN installer file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
-CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
-read -p "Please specify NCCL installer file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
-NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
-echo " "
-
 read -n1 -r -p "Check nvidia driver is installed correctly. press ENTER to continue!" ENTER
 ubuntu-drivers devices
 lsmod | grep nvidia
@@ -132,8 +136,15 @@ if [[ -L /usr/local/cuda ]]; then
   exit
 fi
 
+read -p "Please specify CUDA installer file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
+CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
+read -p "Please specify CDNN installer file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
+CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
+read -p "Please specify NCCL installer file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
+NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
+echo " "
+
 cuda
-nccl
 
 sudo ldconfig
 
