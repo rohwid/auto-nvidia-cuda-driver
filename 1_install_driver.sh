@@ -17,15 +17,19 @@ sudo apt dist-upgrade -y
 read -n1 -r -p "Check nvidia driver to be install. press ENTER to continue!" ENTER
 ubuntu-drivers devices
 
-read -p "Do you want to install NVIDIA driver automatically? [Y/n]: " ENTER
+read -p "Do you want to install NVIDIA driver automatically? [Y/n]: " AUTO
+AUTO="${AUTO:=Y}"
 
-if [[ MAN -eq "Y" ]] || [[ MAN -eq "y" ]]; then
+if [[ $AUTO = "Y" ]] || [[ $AUTO = "y" ]]; then
   sudo ubuntu-drivers autoinstall
-else
-  read -p "Please enter the NVIDIA driver version: " version
+elif [[ $AUTO = "N" ]] || [[ $AUTO = "n" ]]; then
+  read -p "Please enter the NVIDIA driver version: " VER
   sudo apt install nvidia-driver-$VER -y
+else
+  echo "[NVDIA-DRIVER] Input invalid."
+  echo "[NVDIA-DRIVER] Installation aborted."
+  exit
 fi
-
 
 read -n1 -r -p "Reboot to load the changes. press ENTER to continue!" ENTER
 sudo reboot

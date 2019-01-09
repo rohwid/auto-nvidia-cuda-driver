@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get purge nvidia*
-sudo apt-get autoremove
-sudo apt-get autoclean
+sudo apt purge nvidia*
+sudo apt autoremove
+sudo apt autoclean
 sudo rm -rf /usr/local/cuda*

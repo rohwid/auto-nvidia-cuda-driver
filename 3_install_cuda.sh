@@ -14,15 +14,15 @@ cuda() {
     if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
       cudnn
     elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
-      echo 'Here the content of "installer" directory:'
-      ls installer/
-      echo " "
-
       read -p "How many CUDA update patch do you have? " NO_PATCH
+      COUNTER=1
 
-      for i in $NO_PATCH; do
-        read -p "Please specify CUDA update patch no. $i: " CUPDATE
-        sudo sh installer/${CUPDATE} --silent --accept-eula
+      while [ $COUNTER -le $NO_PATCH ]; do
+        echo 'Here the content of "installer" directory:'
+        ls installer/
+        read -p "Please specify CUDA update patch no. $COUNTER: " CUPDATE
+        sudo sh installer/${CUPDATE}
+        let COUNTER=COUNTER+1
       done
 
       cudnn
@@ -49,18 +49,21 @@ cudnn() {
     sudo cp installer/cudnn/lib64/libcudnn* /usr/local/cuda/lib64
     sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 
+    read -n1 -r -p "Install libcupti-dev. press ENTER to continue!" ENTER
+    sudo apt install libcupti-dev -y
+
     echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
     read -p "Have you set the cuda in ~./bashrc? [y/N]: "
     UPDATE="${UPDATE:=N}"
+
     if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
       nccl
     elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
       echo " " >> ~/.bashrc
+      echo " " >> ~/.bashrc
       echo '# CUDA Enviroment' >> ~/.bashrc
       echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
       echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
-
-      nccl
     else
       echo "[CUDA-TSFLOW] Input invalid."
       echo "[CUDA-TSFLOW] Installation aborted."
@@ -69,21 +72,6 @@ cudnn() {
   else
     echo "[CUDA-TSFLOW] CUDNN installer not found."
     echo "[CUDA-TSFLOW] CUDNN installation failed"
-    exit
-  fi
-}
-
-nccl() {
-  read -n1 -r -p "Install NCCL. press ENTER to continue!" ENTER
-  if [[ -f installer/${NCCL} ]]; then
-    echo "[CUDA-TSFLOW] Installing NCCL.."
-    mkdir installer/nccl
-    tar Jxvf installer/${NCCL} -C installer/nccl/ --strip-components=1
-    sudo cp installer/nccl/lib/libnccl* /usr/local/cuda/lib64/
-    sudo cp installer/nccl/include/nccl.h /usr/local/cuda/include/
-  else
-    echo "[CUDA-TSFLOW] NCCL installer not found."
-    echo "[CUDA-TSFLOW] NCCL installation failed"
     exit
   fi
 }
@@ -136,12 +124,12 @@ if [[ -L /usr/local/cuda ]]; then
   exit
 fi
 
-read -p "Please specify CUDA installer file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
-CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
-read -p "Please specify CDNN installer file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
-CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
-read -p "Please specify NCCL installer file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
-NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
+read -p "Please specify CUDA installer file. [Defaut: cuda_9.0.176_384.81_linux.run]:" CUDA
+CUDA="${CUDA:=cuda_9.0.176_384.81_linux.run}"
+read -p "Please specify CDNN installer file. [Defaut: cudnn-9.0-linux-x64-v7.4.2.24.tgz]:" CUDNN
+CUDNN="${CUDNN:=cudnn-9.0-linux-x64-v7.4.2.24.tgz}"
+read -p "Please specify NCCL installer file. [Defaut: nccl_2.3.7-1+cuda9.0_x86_64.txz]:" NCCL
+NCCL="${NCCL:=nccl_2.3.7-1+cuda9.0_x86_64.txz}"
 echo " "
 
 cuda
@@ -159,5 +147,16 @@ echo " $ sudo ldconfig"
 echo " "
 echo "Verify CUDA in linux enviroment: "
 echo ' $ echo $CUDA_HOME'
+echo " "
+echo 'If you have an error about "libcudnn" when load the enviroment or "$ sudo ldconfig" command. '
+echo 'Here is the error: '
+echo " /sbin/ldconfig.real: /usr/local/cuda-9.0/lib64/libcudnn.so.7 is not a symbolic link"
+echo " "
+echo "The solution is create symlink manually in libcuddn lib. Here the example: "
+echo " $ sudo ln -sf /usr/local/cuda/lib64/libcudnn.so.7.4.2 /usr/local/cuda/lib64/libcudnn.so.7"
+echo " "
+echo 'Make sure you have check the "/usr/local/cuda/lib64/" and the version of "libcudnn.so.[ver]."'
+echo 'Then create symlink to the "libcudnn.so.7 like the example above!"'
+echo " "
 echo "==============================================================================================="
 echo " "
