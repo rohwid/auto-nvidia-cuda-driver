@@ -14,15 +14,15 @@ cuda() {
     if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
       cudnn
     elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
-      echo 'Here the content of "installer" directory:'
-      ls installer/
-      echo " "
-
       read -p "How many CUDA update patch do you have? " NO_PATCH
+      COUNTER=1
 
-      for i in $NO_PATCH; do
-        read -p "Please specify CUDA update patch no. $i: " CUPDATE
-        sudo sh installer/${CUPDATE} --silent --accept-eula
+      while [ $COUNTER -le $NO_PATCH ]; do
+        echo 'Here the content of "installer" directory:'
+        ls installer/
+        read -p "Please specify CUDA update patch no. $COUNTER: " CUPDATE
+        sudo sh installer/${CUPDATE}
+        let COUNTER=COUNTER+1
       done
 
       cudnn
