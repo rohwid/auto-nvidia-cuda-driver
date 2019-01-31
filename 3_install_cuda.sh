@@ -55,6 +55,9 @@ cudnn() {
     if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
       nccl
     elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
+      echo "[CUDA-TSFLOW] Backup linux enviroment before add cuda enviroment.."
+      cp ~/.bashrc ~/.bashrc.backup.cuda
+
       echo " " >> ~/.bashrc
       echo '# CUDA Enviroment' >> ~/.bashrc
       echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
