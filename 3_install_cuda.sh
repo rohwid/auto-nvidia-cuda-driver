@@ -52,8 +52,10 @@ cudnn() {
     read -n1 -r -p "Install libcupti-dev. press ENTER to continue!" ENTER
     sudo apt install libcupti-dev -y
 
-    echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
+    echo "[CUDA-TSFLOW] Backup linux enviroment before add cuda enviroment.."
+    cp ~/.bashrc ~/.bashrc.backup.cuda
 
+    echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
     echo " " >> ~/.bashrc
     echo '# CUDA Enviroment' >> ~/.bashrc
     echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
