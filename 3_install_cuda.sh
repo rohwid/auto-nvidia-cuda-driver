@@ -53,22 +53,11 @@ cudnn() {
     sudo apt install libcupti-dev -y
 
     echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
-    read -p "Have you set the cuda in ~./bashrc? [y/N]: "
-    UPDATE="${UPDATE:=N}"
 
-    if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
-      nccl
-    elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
-      echo " " >> ~/.bashrc
-      echo " " >> ~/.bashrc
-      echo '# CUDA Enviroment' >> ~/.bashrc
-      echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
-      echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
-    else
-      echo "[CUDA-TSFLOW] Input invalid."
-      echo "[CUDA-TSFLOW] Installation aborted."
-      exit
-    fi
+    echo " " >> ~/.bashrc
+    echo '# CUDA Enviroment' >> ~/.bashrc
+    echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
+    echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
   else
     echo "[CUDA-TSFLOW] CUDNN installer not found."
     echo "[CUDA-TSFLOW] CUDNN installation failed"
@@ -82,9 +71,8 @@ echo "Welcome to Cuda Installer"
 echo "==============================================================================================="
 echo "This process will be install the latest cuda and tensorflow."
 echo 'It require "installer file" and put it in "installer directory". Here is the installer list: '
-echo " + Latest CUDA installer [ex: cuda_10.0.130_410.48_linux.run]."
-echo " + Latest CUDNN library [ex: cudnn-10.0-linux-x64-v7.3.1.20.tgz]."
-echo " + Latest NCCL installer [ex: nccl_2.3.5-2+cuda10.0_x86_64.txz]."
+echo " + Latest CUDA installer [ex: cuda_9.0.176_384.81_linux.run]."
+echo " + Latest CUDNN library [ex: cudnn-9.0-linux-x64-v7.4.2.24.tgz]."
 echo " "
 echo 'If you have the "cuda toolkit update patch" put in "installer" directory too!'
 echo " "
@@ -128,8 +116,6 @@ read -p "Please specify CUDA installer file. [Defaut: cuda_9.0.176_384.81_linux.
 CUDA="${CUDA:=cuda_9.0.176_384.81_linux.run}"
 read -p "Please specify CDNN installer file. [Defaut: cudnn-9.0-linux-x64-v7.4.2.24.tgz]:" CUDNN
 CUDNN="${CUDNN:=cudnn-9.0-linux-x64-v7.4.2.24.tgz}"
-read -p "Please specify NCCL installer file. [Defaut: nccl_2.3.7-1+cuda9.0_x86_64.txz]:" NCCL
-NCCL="${NCCL:=nccl_2.3.7-1+cuda9.0_x86_64.txz}"
 echo " "
 
 cuda
