@@ -3,14 +3,7 @@
 echo "==============================================================================================="
 echo "TENSORFLOW MANUAL COMPILATION FOR INSTALL AND UPDATE"
 echo "==============================================================================================="
-echo "WARNING! Make sure you've run in Python Virtual Enviroment!"
-echo "This script is only can run in Virtual Enviroment."
-echo " "
-read -n1 -r -p "If you're running in virtual enviroment. press ENTER to continue!" ENTER
-
-pip install -U pip six numpy wheel mock
-pip install -U keras_applications==1.0.5 --no-deps
-pip install -U keras_preprocessing==1.0.3 --no-deps
+echo "WARNING! Please run this script as user not root."
 
 read -n1 -r -p "Clone TensorFlow from GitHub. press ENTER to continue!" ENTER
 if [[ ! -d tensorflow ]]; then
