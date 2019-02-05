@@ -29,12 +29,12 @@ echo "Do you wish to build TensorFlow with XLA JIT support? [Y/n]: Y"
 echo "Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]: N"
 echo "Do you wish to build TensorFlow with ROCm support? [y/N]: N"
 echo "Do you wish to build TensorFlow with CUDA support? [y/N]: Y"
-echo "Please specify the CUDA SDK version you want to use. [Leave empty to default to CUDA 9.0]: 10.0"
+echo "Please specify the CUDA SDK version you want to use. [Leave empty to default to CUDA 9.0]: 9.0"
 echo "Please specify the location where CUDA 10.0 toolkit is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: /usr/local/cuda"
-echo "Please specify the cuDNN version you want to use. [Leave empty to default to cuDNN 7]: 7.3.1"
+echo "Please specify the cuDNN version you want to use. [Leave empty to default to cuDNN 7]: 7.4.2"
 echo "Please specify the location where cuDNN 7 library is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: /usr/local/cuda/"
 echo "Do you wish to build TensorFlow with TensorRT support? [y/N]: N"
-echo "Please specify the locally installed NCCL version you want to use. [Default is to use https://github.com/nvidia/nccl]: 2.3.5"
+echo "Please specify the locally installed NCCL version you want to use. [Default is to use https://github.com/nvidia/nccl]: 2.3.7"
 echo "Please specify the location where NCCL library is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: /usr/local/cuda/targets/x86_64-linux"
 echo "Please note that each additional compute capability significantly increases your build time and binary size. [Default is: 5.0] 5.0"
 echo "Do you want to use clang as CUDA compiler? [y/N]: N"
@@ -53,11 +53,10 @@ bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_
 read -n1 -r -p "Build TensorFlow installer package with bazel. press ENTER to continue!" ENTER
 bazel-bin/tensorflow/tools/pip_package/build_pip_package tensorflow_pkg
 
-read -n1 -r -p "Install TensorFlow. press ENTER to continue!" ENTER
-cd tensorflow_pkg
-
 read -p "Do want install tensorflow now? [Y/n]: " DEP
 DEP="${DEP:=Y}"
+
+cd tensorflow_pkg
 
 if [ DEP -eq Y ] || [ DEP -eq y ]; then
   sudo pip install tensorflow*.whl

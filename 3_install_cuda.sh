@@ -146,7 +146,7 @@ read -p "Please specify CUDA installer file. [Defaut: cuda_9.0.176_384.81_linux.
 CUDA="${CUDA:=cuda_9.0.176_384.81_linux.run}"
 read -p "Please specify CDNN installer file. [Defaut: cudnn-9.0-linux-x64-v7.4.2.24.tgz]: " CUDNN
 CUDNN="${CUDNN:=cudnn-9.0-linux-x64-v7.4.2.24.tgz}"
-read -p "Please specify NCCL installer file. [Defaut: cudnn-9.0-linux-x64-v7.4.2.24.tgz]: " NCCL
+read -p "Please specify NCCL installer file. [Defaut: nccl_2.3.7-1+cuda9.0_x86_64.txz]: " NCCL
 NCCL="${NCCL:=nccl_2.3.7-1+cuda9.0_x86_64.txz}"
 echo " "
 
