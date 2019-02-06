@@ -3,6 +3,8 @@
 echo "==============================================================================================="
 echo "Welcome to NVIDIA Driver Installer"
 echo "==============================================================================================="
+echo "WARNING! Please run this script as user not root."
+echo " "
 read -n1 -r -p "Install the dependencies. press ENTER to continue!" ENTER
 sudo apt update
 sudo apt install openjdk-8-jdk git python-dev python3-dev python-numpy python3-tk cmake unzip zip \

@@ -95,6 +95,8 @@ nccl() {
 echo "==============================================================================================="
 echo "Welcome to Cuda Installer"
 echo "==============================================================================================="
+echo "WARNING! Please run this script as user not root."
+echo " "
 echo "This process will be install the latest cuda and tensorflow."
 echo 'It require "installer file" and put it in "installer directory". Here is the installer list: '
 echo " + Latest CUDA installer [ex: cuda_10.0.130_410.48_linux.run]."

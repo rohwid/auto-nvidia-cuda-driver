@@ -4,7 +4,7 @@ echo "==========================================================================
 echo "TENSORFLOW MANUAL COMPILATION FOR INSTALL AND UPDATE"
 echo "==============================================================================================="
 echo "WARNING! Please run this script as user not root."
-
+echo " "
 read -n1 -r -p "Clone TensorFlow from GitHub. press ENTER to continue!" ENTER
 if [ ! -d tensorflow ]; then
   git clone https://github.com/tensorflow/tensorflow.git

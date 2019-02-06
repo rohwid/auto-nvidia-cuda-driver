@@ -3,6 +3,8 @@
 echo "==============================================================================================="
 echo "NVIDIA Driver Status Checker"
 echo "==============================================================================================="
+echo "WARNING! Please run this script as user not root."
+echo " "
 echo "Please select the nvidia driver status to check: "
 echo "1. The current used devices"
 echo "2. Installed driver"

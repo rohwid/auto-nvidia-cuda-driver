@@ -3,6 +3,8 @@
 echo "==============================================================================================="
 echo "PREPARE BAZEL AND PYTHON ENVIROMENT FOR TENSORFLOW MANUAL COMPILATION"
 echo "==============================================================================================="
+echo "WARNING! Please run this script as user not root."
+echo " "
 read -n1 -r -p "Install Bezel in ubuntu. press ENTER to continue!" ENTER
 echo "[CUDA-TSFLOW] Installing Bezel dependencies.."
 sudo apt-get install gcc-4.8 g++-4.8
