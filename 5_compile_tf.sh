@@ -6,7 +6,7 @@ echo "==========================================================================
 echo "WARNING! Please run this script as user not root."
 
 read -n1 -r -p "Clone TensorFlow from GitHub. press ENTER to continue!" ENTER
-if [[ ! -d tensorflow ]]; then
+if [ ! -d tensorflow ]; then
   git clone https://github.com/tensorflow/tensorflow.git
 fi
 
