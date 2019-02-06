@@ -24,6 +24,7 @@ if [ ! -d ~/Bazel ]; then
   echo "[CUDA-TSFLOW] Bezel Installation done."
 fi
 
+echo "[CUDA-TSFLOW] Installing python enviroment for tensorflow.."
 pip install -U pip six numpy wheel mock
 pip3 install -U pip six numpy wheel mock
 pip install -U keras_applications==1.0.5 --no-deps
