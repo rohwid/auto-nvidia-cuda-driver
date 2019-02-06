@@ -3,17 +3,10 @@
 echo "==============================================================================================="
 echo "TENSORFLOW MANUAL COMPILATION FOR INSTALL AND UPDATE"
 echo "==============================================================================================="
-echo "WARNING! Make sure you've run in Python Virtual Enviroment!"
-echo "This script is only can run in Virtual Enviroment."
-echo " "
-read -n1 -r -p "If you're running in virtual enviroment. press ENTER to continue!" ENTER
-
-pip install -U pip six numpy wheel mock
-pip install -U keras_applications==1.0.5 --no-deps
-pip install -U keras_preprocessing==1.0.3 --no-deps
+echo "WARNING! Please run this script as user not root."
 
 read -n1 -r -p "Clone TensorFlow from GitHub. press ENTER to continue!" ENTER
-if [[ ! -d tensorflow ]]; then
+if [ ! -d tensorflow ]; then
   git clone https://github.com/tensorflow/tensorflow.git
 fi
 
@@ -60,13 +53,11 @@ bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_
 read -n1 -r -p "Build TensorFlow installer package with bazel. press ENTER to continue!" ENTER
 bazel-bin/tensorflow/tools/pip_package/build_pip_package tensorflow_pkg
 
-read -n1 -r -p "Install TensorFlow. press ENTER to continue!" ENTER
-cd tensorflow_pkg
-
 read -p "Do want install tensorflow now? [Y/n]: " DEP
 DEP="${DEP:=Y}"
 
 if [ DEP -eq Y ] || [ DEP -eq y ]; then
+  cd tensorflow_pkg
   sudo pip install tensorflow*.whl
   echo "[CUDA-TSFLOW] TensorFlow GPU was installed in this Virtual Enviroment."
   echo "[CUDA-TSFLOW] Installation finished."
