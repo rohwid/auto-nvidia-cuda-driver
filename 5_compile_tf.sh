@@ -58,7 +58,7 @@ else
   read -p "Choose 'Yes (Y)' to delete and start compilation or 'No (N)' to install the existing package? [Y/n]: " COM
   COMPL="${COMPL:=Y}"
 
-  if [ COMPL -eq N ] || [ COMPL -eq n ]; then
+  if [ $COMPL = "N" ] || [ $COMPL = "n" ]; then
     cd tensorflow_pkg
     sudo pip install tensorflow*.whl
     echo "[CUDA-TSFLOW] TensorFlow GPU was installed in this Virtual Enviroment."
@@ -75,7 +75,7 @@ fi
 read -p "Do want install tensorflow now? [Y/n]: " DEP
 DEP="${DEP:=Y}"
 
-if [ DEP -eq Y ] || [ DEP -eq y ]; then
+if [ $DEP = "Y" ] || [ $DEP = "y" ]; then
   cd tensorflow_pkg
   sudo pip install tensorflow*.whl
   echo "[CUDA-TSFLOW] TensorFlow GPU was installed in this Virtual Enviroment."
