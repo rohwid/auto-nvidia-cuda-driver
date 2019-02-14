@@ -26,10 +26,14 @@ if [ ! -d ~/Bazel ]; then
   echo "[CUDA-TSFLOW] Bezel Installation done."
 fi
 
+echo "[CUDA-TSFLOW] Upgrading pip version.."
+sudo -H pip install --upgrade pip
+sudo -H pip3 install --upgrade pip
+
 echo "[CUDA-TSFLOW] Installing python enviroment for tensorflow.."
-pip install -U pip six numpy wheel mock
-pip3 install -U pip six numpy wheel mock
-pip install -U keras_applications==1.0.5 --no-deps
-pip3 install -U keras_applications==1.0.5 --no-deps
-pip install -U keras_preprocessing==1.0.3 --no-deps
-pip3 install -U keras_preprocessing==1.0.3 --no-deps
+sudo pip install -U pip six numpy wheel mock
+sudo pip3 install -U pip six numpy wheel mock
+sudo pip install -U keras_applications==1.0.5 --no-deps
+sudo pip3 install -U keras_applications==1.0.5 --no-deps
+sudo pip install -U keras_preprocessing==1.0.3 --no-deps
+sudo pip3 install -U keras_preprocessing==1.0.3 --no-deps
