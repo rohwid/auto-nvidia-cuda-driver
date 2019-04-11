@@ -3,7 +3,7 @@
 cuda() {
   read -n1 -r -p "Install CUDA. press ENTER to continue!" ENTER
   if [[ -f installers/${CUDA} ]]; then
-    echo "[CUDA-TSFLOW] Installing $.."
+    echo "[CUDA-TSFLOW] Installing ${CUDA}.."
     sudo sh installers/${CUDA} --override --silent --toolkit
     echo "[CUDA-TSFLOW] CUDA Installation done."
     echo " "
@@ -41,7 +41,7 @@ cuda() {
 cudnn() {
   read -n1 -r -p "Install CUDNN. press ENTER to continue!" ENTER
   if [[ -f installers/${CUDNN} ]]; then
-    echo "[CUDA-TSFLOW] Installing CUDNN.."
+    echo "[CUDA-TSFLOW] Installing ${CUDNN}.."
 
     mkdir installers/cudnn
     tar -xzvf installers/${CUDNN} -C installers/cudnn --strip-components=1
@@ -79,11 +79,26 @@ cudnn() {
 nccl() {
   read -n1 -r -p "Install NCCL. press ENTER to continue!" ENTER
   if [[ -f installers/${NCCL} ]]; then
-    echo "[CUDA-TSFLOW] Installing NCCL.."
+    echo "[CUDA-TSFLOW] Installing ${NCCL}.."
     mkdir installers/nccl
     tar Jxvf installers/${NCCL} -C installers/nccl/ --strip-components=1
     sudo cp installers/nccl/lib/libnccl* /usr/local/cuda/lib64/
     sudo cp installers/nccl/include/nccl.h /usr/local/cuda/include/
+
+    clear_pkg
+  else
+    echo "[CUDA-TSFLOW] NCCL installers not found."
+    echo "[CUDA-TSFLOW] NCCL installation failed"
+    exit
+  fi
+}
+
+clear_pkg(){
+  read -n1 -r -p "Clear installation packages. press ENTER to continue!" ENTER
+  if [[ -d installers/nccl ]] && [[ -d installers/cudnn ]]; then
+    echo "[CUDA-TSFLOW] Deleting installation packages.."
+    rm -r installers/cudnn
+    rm -r installers/nccl
   else
     echo "[CUDA-TSFLOW] NCCL installers not found."
     echo "[CUDA-TSFLOW] NCCL installation failed"

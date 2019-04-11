@@ -21,3 +21,8 @@ cuda_*
 cudnn-*
 nccl_*
 bazel-*
+
+# Tf directory
+tensorflow
+nccl
+cudnn
