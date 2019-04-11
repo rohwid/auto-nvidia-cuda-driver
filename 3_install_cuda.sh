@@ -89,6 +89,21 @@ nccl() {
     tar Jxvf installers/${NCCL} -C installers/nccl/ --strip-components=1
     sudo cp installers/nccl/lib/libnccl* /usr/local/cuda/lib64/
     sudo cp installers/nccl/include/nccl.h /usr/local/cuda/include/
+
+    clear_pkg
+  else
+    echo "[CUDA-TSFLOW] NCCL installers not found."
+    echo "[CUDA-TSFLOW] NCCL installation failed"
+    exit
+  fi
+}
+
+clear_pkg(){
+  read -n1 -r -p "Clear installation packages. press ENTER to continue!" ENTER
+  if [[ -d installers/nccl ]] && [[ -d installers/cudnn ]]; then
+    echo "[CUDA-TSFLOW] Deleting installation packages.."
+    rm -r installers/cudnn
+    rm -r installers/nccl
   else
     echo "[CUDA-TSFLOW] NCCL installers not found."
     echo "[CUDA-TSFLOW] NCCL installation failed"
