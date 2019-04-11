@@ -50,11 +50,11 @@ cudnn() {
     sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 
     echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
-    read -p "Have you set the cuda in ~./bashrc? [y/N]: "
-    UPDATE="${UPDATE:=N}"
-    if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
+    read -p "Have you set the cuda in ~./bashrc? [y/N]: " UPDATE_ENV
+    UPDATE_ENV="${UPDATE_ENV:=N}"
+    if [[ $UPDATE_ENV = "N" ]] || [[ $UPDATE_ENV = "n" ]]; then
       nccl
-    elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
+    elif [[ $UPDATE_ENV = "Y" ]] || [[ $UPDATE_ENV = "y" ]]; then
       echo "[CUDA-TSFLOW] Backup linux enviroment before add cuda enviroment.."
       cp ~/.bashrc ~/.bashrc.backup.cuda
 
@@ -137,34 +137,49 @@ echo "[CUDA-TSFLOW] Checking CUDA in your computer.."
 if [[ -L /usr/local/cuda ]]; then
   echo "[CUDA-TSFLOW] CUDA has installed in your system."
 
-  if [[ -f /usr/local/cuda/include/cudnn.h ]]; then
-    echo "[CUDA-TSFLOW] CUDNN has installed in your system."
+  read -p "Still want to continue the process or add more cuda version? [y/N]: " FORCE
+  FORCE="${FORCE:=N}"
+
+  if [[ $FORCE = "N" ]] || [[ $FORCE = "n" ]]; then
+    echo "[CUDA-TSFLOW] Clean previous CUDA Installation if you want to re-install!"
+    echo "[CUDA-TSFLOW] CUDA installation canceled."
+    echo " "
+    echo "==============================================================================================="
+    echo "CUDA Post Installation Notes"
+    echo "==============================================================================================="
+    echo "Run this command to delete exisisting CUDA version."
+    echo "$ sudo rm -r /usr/local/cuda*"
+    echo " "
+    echo "==============================================================================================="
+    echo " "
+
+    exit
+  elif [[ $FORCE = "Y" ]] || [[ $FORCE = "y" ]]; then
+    read -p "Please specify CUDA installers file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
+    CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
+    read -p "Please specify CDNN installers file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
+    CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
+    read -p "Please specify NCCL installers file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
+    NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
+    echo " "
+
+    cuda
+  else
+    echo "[CUDA-TSFLOW] Input invalid."
+    echo "[CUDA-TSFLOW] Installation aborted."
+    exit
   fi
-
-  echo "[CUDA-TSFLOW] Clean previous CUDA Installation if you want to re-install!"
-  echo "[CUDA-TSFLOW] CUDA installation canceled."
-  echo " "
-  echo "==============================================================================================="
-  echo "CUDA Post Installation Notes"
-  echo "==============================================================================================="
-  echo "Run this command to delete exisisting CUDA version."
-  echo "$ sudo rm -r /usr/local/cuda*"
-  echo " "
-  echo "==============================================================================================="
+else
+  read -p "Please specify CUDA installers file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
+  CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
+  read -p "Please specify CDNN installers file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
+  CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
+  read -p "Please specify NCCL installers file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
+  NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
   echo " "
 
-  exit
+  cuda
 fi
-
-read -p "Please specify CUDA installers file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
-CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
-read -p "Please specify CDNN installers file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
-CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
-read -p "Please specify NCCL installers file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
-NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
-echo " "
-
-cuda
 
 sudo ldconfig
 
