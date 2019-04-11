@@ -102,8 +102,8 @@ clear_pkg(){
   read -n1 -r -p "Clear installation packages. press ENTER to continue!" ENTER
   if [[ -d installers/nccl ]] && [[ -d installers/cudnn ]]; then
     echo "[CUDA-TSFLOW] Deleting installation packages.."
-    rm -r installers/cudnn
-    rm -r installers/nccl
+    sudo rm -r installers/cudnn
+    sudo rm -r installers/nccl
   else
     echo "[CUDA-TSFLOW] NCCL installers not found."
     echo "[CUDA-TSFLOW] NCCL installation failed"
