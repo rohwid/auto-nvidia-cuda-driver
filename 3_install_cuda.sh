@@ -54,7 +54,7 @@ cudnn() {
     UPDATE_ENV="${UPDATE_ENV:=N}"
     if [[ $UPDATE_ENV = "N" ]] || [[ $UPDATE_ENV = "n" ]]; then
       echo "[CUDA-TSFLOW] Backup linux enviroment before add cuda enviroment.."
-      cp ~/.bashrc ~/.bashrc.orig
+      cp ~/.bashrc ~/.bashrc.orig.cuda
 
       echo " " >> ~/.bashrc
       echo '# CUDA Enviroment' >> ~/.bashrc
@@ -64,16 +64,8 @@ cudnn() {
 
       nccl
     elif [[ $UPDATE_ENV = "Y" ]] || [[ $UPDATE_ENV = "y" ]]; then
-      echo "[CUDA-TSFLOW] Backup linux enviroment before add cuda enviroment.."
-      cp ~/.bashrc ~/.bashrc.backup.cuda
-
-      echo " " >> ~/.bashrc
-      echo '# CUDA Enviroment' >> ~/.bashrc
-      echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}$' >> ~/.bashrc
-      echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
-      echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
-
       nccl
+      
     else
       echo "[CUDA-TSFLOW] Input invalid."
       echo "[CUDA-TSFLOW] Installation aborted."
