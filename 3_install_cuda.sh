@@ -56,10 +56,8 @@ cudnn() {
     read -p "Have you set the cuda in ~./bashrc? [y/N]: "
     UPDATE="${UPDATE:=N}"
     if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
-      nccl
-    elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
       echo "[CUDA-TSFLOW] Backup linux enviroment before add cuda enviroment.."
-      cp ~/.bashrc ~/.bashrc.backup.cuda
+      cp ~/.bashrc ~/.bashrc.orig.cuda
 
       echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
       echo " " >> ~/.bashrc
@@ -68,6 +66,8 @@ cudnn() {
       echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
       echo 'export PATH="$PATH:$HOME/Bazel/bin"' >> ~/.bashrc
 
+      nccl
+    elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
       nccl
     else
       echo "[CUDA-TSFLOW] Input invalid."

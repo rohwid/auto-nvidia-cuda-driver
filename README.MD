@@ -1,3 +1,8 @@
+## Here's some reference's about CUDA and CUDNN support
+
++ [cuDNN Support Matrix](https://docs.nvidia.com/deeplearning/sdk/cudnn-support-matrix/index.html)
++ [CUDA Compute Capability Support](https://developer.nvidia.com/cuda-gpus)
+
 ## Download all installer file
 
 Here's the link to downloads all requirement installer file:
