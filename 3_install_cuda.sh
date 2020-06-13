@@ -3,9 +3,9 @@
 cuda() {
   read -n1 -r -p "Install CUDA. press ENTER to continue!" ENTER
   if [[ -f installers/${CUDA} ]]; then
-    echo "[CUDA-TSFLOW] Installing CUDA.."
+    echo "[AUTO-CUDA] Installing CUDA.."
     sudo sh installers/${CUDA} --override --silent --toolkit
-    echo "[CUDA-TSFLOW] CUDA Installation done."
+    echo "[AUTO-CUDA] CUDA Installation done."
     echo " "
 
     read -p "Do you have CUDA update patch? [y/N]: " UPDATE
@@ -27,13 +27,13 @@ cuda() {
 
       cudnn
     else
-      echo "[CUDA-TSFLOW] Input invalid."
-      echo "[CUDA-TSFLOW] Installation aborted."
+      echo "[AUTO-CUDA] Input invalid."
+      echo "[AUTO-CUDA] Installation aborted."
       exit
     fi
   else
-    echo "[CUDA-TSFLOW] CUDA installers not found."
-    echo "[CUDA-TSFLOW] Installation aborted"
+    echo "[AUTO-CUDA] CUDA installers not found."
+    echo "[AUTO-CUDA] Installation aborted"
     exit
   fi
 }
@@ -41,7 +41,7 @@ cuda() {
 cudnn() {
   read -n1 -r -p "Install CUDNN. press ENTER to continue!" ENTER
   if [[ -f installers/${CUDNN} ]]; then
-    echo "[CUDA-TSFLOW] Installing CUDNN.."
+    echo "[AUTO-CUDA] Installing CUDNN.."
 
     mkdir installers/cudnn
     tar -xzvf installers/${CUDNN} -C installers/cudnn --strip-components=1
@@ -52,31 +52,31 @@ cudnn() {
     read -n1 -r -p "Install libcupti-dev. press ENTER to continue!" ENTER
     sudo apt install libcupti-dev -y
 
-    echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
+    echo "[AUTO-CUDA] Cofiguring cuda in linux enviroment.."
     read -p "Have you set the cuda in ~./bashrc? [y/N]: "
     UPDATE="${UPDATE:=N}"
     if [[ $UPDATE = "N" ]] || [[ $UPDATE = "n" ]]; then
-      echo "[CUDA-TSFLOW] Backup linux enviroment before add cuda enviroment.."
+      echo "[AUTO-CUDA] Backup linux enviroment before add cuda enviroment.."
       cp ~/.bashrc ~/.bashrc.orig.cuda
 
-      echo "[CUDA-TSFLOW] Cofiguring cuda in linux enviroment.."
+      echo "[AUTO-CUDA] Cofiguring cuda in linux enviroment.."
       echo " " >> ~/.bashrc
       echo '# CUDA Enviroment' >> ~/.bashrc
+      echo 'export PATH="$PATH:$HOME/Bazel/bin"' >> ~/.bashrc
       echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"' >> ~/.bashrc
       echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
-      echo 'export PATH="$PATH:$HOME/Bazel/bin"' >> ~/.bashrc
 
       nccl
     elif [[ $UPDATE = "Y" ]] || [[ $UPDATE = "y" ]]; then
       nccl
     else
-      echo "[CUDA-TSFLOW] Input invalid."
-      echo "[CUDA-TSFLOW] Installation aborted."
+      echo "[AUTO-CUDA] Input invalid."
+      echo "[AUTO-CUDA] Installation aborted."
       exit
     fi
   else
-    echo "[CUDA-TSFLOW] CUDNN installers not found."
-    echo "[CUDA-TSFLOW] CUDNN installation failed"
+    echo "[AUTO-CUDA] CUDNN installers not found."
+    echo "[AUTO-CUDA] CUDNN installation failed"
     exit
   fi
 }
@@ -84,7 +84,7 @@ cudnn() {
 nccl() {
   read -n1 -r -p "Install NCCL. press ENTER to continue!" ENTER
   if [[ -f installers/${NCCL} ]]; then
-    echo "[CUDA-TSFLOW] Installing NCCL.."
+    echo "[AUTO-CUDA] Installing NCCL.."
     mkdir installers/nccl
     tar Jxvf installers/${NCCL} -C installers/nccl/ --strip-components=1
     sudo cp installers/nccl/lib/libnccl* /usr/local/cuda/lib64/
@@ -92,8 +92,8 @@ nccl() {
 
     clear_pkg
   else
-    echo "[CUDA-TSFLOW] NCCL installers not found."
-    echo "[CUDA-TSFLOW] NCCL installation failed"
+    echo "[AUTO-CUDA] NCCL installers not found."
+    echo "[AUTO-CUDA] NCCL installation failed"
     exit
   fi
 }
@@ -101,12 +101,12 @@ nccl() {
 clear_pkg(){
   read -n1 -r -p "Clear installation packages. press ENTER to continue!" ENTER
   if [[ -d installers/nccl ]] && [[ -d installers/cudnn ]]; then
-    echo "[CUDA-TSFLOW] Deleting installation packages.."
+    echo "[AUTO-CUDA] Deleting installation packages.."
     sudo rm -r installers/cudnn
     sudo rm -r installers/nccl
   else
-    echo "[CUDA-TSFLOW] NCCL installers not found."
-    echo "[CUDA-TSFLOW] NCCL installation failed"
+    echo "[AUTO-CUDA] NCCL installers not found."
+    echo "[AUTO-CUDA] NCCL installation failed"
     exit
   fi
 }
@@ -136,16 +136,16 @@ read -n1 -r -p "Check nvidia driver is installed correctly. press ENTER to conti
 ubuntu-drivers devices
 lsmod | grep nvidia
 
-echo "[CUDA-TSFLOW] Checking CUDA in your computer.."
+echo "[AUTO-CUDA] Checking CUDA in your computer.."
 if [[ -L /usr/local/cuda ]]; then
-  echo "[CUDA-TSFLOW] CUDA has installed in your system."
+  echo "[AUTO-CUDA] CUDA has installed in your system."
 
   if [[ -f /usr/local/cuda/include/cudnn.h ]]; then
-    echo "[CUDA-TSFLOW] CUDNN has installed in your system."
+    echo "[AUTO-CUDA] CUDNN has installed in your system."
   fi
 
-  echo "[CUDA-TSFLOW] Clean previous CUDA Installation if you want to re-install!"
-  echo "[CUDA-TSFLOW] CUDA installation canceled."
+  echo "[AUTO-CUDA] Clean previous CUDA Installation if you want to re-install!"
+  echo "[AUTO-CUDA] CUDA installation canceled."
   echo " "
   echo "==============================================================================================="
   echo "CUDA Post Installation Notes"
@@ -171,7 +171,7 @@ cuda
 
 sudo ldconfig
 
-echo "[CUDA-TSFLOW] CUDA Installation done."
+echo "[AUTO-CUDA] CUDA Installation done."
 echo " "
 echo "==============================================================================================="
 echo "CUDA Post Installation Notes"
