@@ -28,8 +28,8 @@ elif [[ $AUTO = "N" ]] || [[ $AUTO = "n" ]]; then
   read -p "Please enter the NVIDIA driver version: " VER
   sudo apt install nvidia-driver-$VER -y
 else
-  echo "[NVDIA-DRIVER] Input invalid."
-  echo "[NVDIA-DRIVER] Installation aborted."
+  echo "[AUTO-DRIVER] Input invalid."
+  echo "[AUTO-DRIVER] Installation aborted."
   exit
 fi
 
