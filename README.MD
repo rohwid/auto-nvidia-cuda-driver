@@ -19,6 +19,6 @@ Put the three installer file that you've downloaded in `installer` directory.
 
 Read and execute carefully, and do what you need. Make sure you've connected with internet and can use https connection. Here the execute order:
 
-+ 1_install_driver.sh
-+ 2_driver_status.sh
-+ 3_install_cuda.sh
++ `install_driver.sh`
++ `driver_status.sh`
++ `install_cuda.sh` or `enable_docker_cuda.sh`

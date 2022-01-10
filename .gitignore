@@ -16,13 +16,5 @@ mnist
 [Tt]humbs.db
 *.DS_Store
 
-# Cuda installer
-cuda_*
-cudnn-*
-nccl_*
-bazel-*
-
-# Tf directory
-tensorflow
-nccl
-cudnn
+# Installer
+!installers/README.MD

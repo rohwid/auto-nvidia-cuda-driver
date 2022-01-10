@@ -45,9 +45,9 @@ cudnn() {
 
     mkdir installers/cudnn
     tar -xzvf installers/${CUDNN} -C installers/cudnn --strip-components=1
-    sudo cp installers/cudnn/include/cudnn.h /usr/local/cuda/include
-    sudo cp installers/cudnn/lib64/libcudnn* /usr/local/cuda/lib64
-    sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+    sudo cp installers/cudnn/include/cudnn.h /usr/local/cuda-10.1/include
+    sudo cp installers/cudnn/lib64/libcudnn* /usr/local/cuda-10.1/lib64
+    sudo chmod a+r /usr/local/cuda-10.1/include/cudnn.h /usr/local/cuda-10.1/lib64/libcudnn*
 
     echo "[AUTO-CUDA] Cofiguring cuda in linux enviroment.."
     read -p "Have you set the cuda in ~./bashrc? [y/N]: " UPDATE_ENV
@@ -58,8 +58,8 @@ cudnn() {
 
       echo " " >> ~/.bashrc
       echo '# CUDA Enviroment' >> ~/.bashrc
-      echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}$' >> ~/.bashrc
-      echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
+      echo 'export PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}$' >> ~/.bashrc
+      echo 'export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
       echo 'export CUDA_HOME="/usr/local/cuda"' >> ~/.bashrc
 
       nccl
@@ -84,8 +84,8 @@ nccl() {
     echo "[AUTO-CUDA] Installing ${NCCL}.."
     mkdir installers/nccl
     tar Jxvf installers/${NCCL} -C installers/nccl/ --strip-components=1
-    sudo cp installers/nccl/lib/libnccl* /usr/local/cuda/lib64/
-    sudo cp installers/nccl/include/nccl.h /usr/local/cuda/include/
+    sudo cp installers/nccl/lib/libnccl* /usr/local/cuda-10.1/lib64/
+    sudo cp installers/nccl/include/nccl.h /usr/local/cuda-10.1/include/
 
     clear_pkg
   else
@@ -116,9 +116,9 @@ echo "WARNING! Please run this script as user not root."
 echo " "
 echo "This process will be install the latest cuda and tensorflow."
 echo 'It require "installers file" and put it in "installers directory". Here is the installers list: '
-echo " + Latest CUDA installers [ex: cuda_10.0.130_410.48_linux.run]."
-echo " + Latest CUDNN library [ex: cudnn-10.0-linux-x64-v7.3.1.20.tgz]."
-echo " + Latest NCCL installer [ex: nccl_2.3.5-2+cuda10.0_x86_64.txz]."
+echo " + Latest CUDA installers [ex: cuda_10.1.105_418.39_linux.run]."
+echo " + Latest CUDNN library [ex: cudnn-10.1-linux-x64-v7.6.5.32.tgz]."
+echo " + Latest NCCL installer [ex: nccl_2.8.3-1+cuda10.1_x86_64.txz]."
 echo " "
 echo 'If you have the "cuda toolkit update patch" put in "installers" directory too!'
 echo " "
@@ -157,12 +157,12 @@ if [[ -L /usr/local/cuda ]]; then
 
     exit
   elif [[ $FORCE = "Y" ]] || [[ $FORCE = "y" ]]; then
-    read -p "Please specify CUDA installers file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
-    CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
-    read -p "Please specify CDNN installers file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
-    CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
-    read -p "Please specify NCCL installers file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
-    NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
+    read -p "Please specify CUDA installers file. [Defaut: cuda_10.1.105_418.39_linux.run]:" CUDA
+    CUDA="${CUDA:=cuda_10.1.105_418.39_linux.run}"
+    read -p "Please specify CDNN installers file. [Defaut: cudnn-10.1-linux-x64-v7.6.5.32.tgz]:" CUDNN
+    CUDNN="${CUDNN:=cudnn-10.1-linux-x64-v7.6.5.32.tgz}"
+    read -p "Please specify NCCL installers file. [Defaut: nccl_2.8.3-1+cuda10.1_x86_64.txz]:" NCCL
+    NCCL="${NCCL:=nccl_2.8.3-1+cuda10.1_x86_64.txz}"
     echo " "
 
     cuda
@@ -172,12 +172,12 @@ if [[ -L /usr/local/cuda ]]; then
     exit
   fi
 else
-  read -p "Please specify CUDA installers file. [Defaut: cuda_10.0.130_410.48_linux.run]:" CUDA
-  CUDA="${CUDA:=cuda_10.0.130_410.48_linux.run}"
-  read -p "Please specify CDNN installers file. [Defaut: cudnn-10.0-linux-x64-v7.3.1.20.tgz]:" CUDNN
-  CUDNN="${CUDNN:=cudnn-10.0-linux-x64-v7.3.1.20.tgz}"
-  read -p "Please specify NCCL installers file. [Defaut: nccl_2.3.5-2+cuda10.0_x86_64.txz]:" NCCL
-  NCCL="${NCCL:=nccl_2.3.5-2+cuda10.0_x86_64.txz}"
+  read -p "Please specify CUDA installers file. [Defaut: cuda_10.1.105_418.39_linux.run]:" CUDA
+  CUDA="${CUDA:=cuda_10.1.105_418.39_linux.run}"
+  read -p "Please specify CDNN installers file. [Defaut: cudnn-10.1-linux-x64-v7.6.5.32.tgz]:" CUDNN
+  CUDNN="${CUDNN:=cudnn-10.1-linux-x64-v7.6.5.32.tgz}"
+  read -p "Please specify NCCL installers file. [Defaut: nccl_2.8.3-1+cuda10.1_x86_64.txz]:" NCCL
+  NCCL="${NCCL:=nccl_2.8.3-1+cuda10.1_x86_64.txz}"
   echo " "
 
   cuda
