@@ -12,5 +12,5 @@ echo "[AUTO-CUDA] Restoring linux enviroment before cuda enviroment added.."
 if [[ -f ~/.bashrc.backup.cuda ]]; then
 	cp ~/.bashrc.backup.cuda ~/.bashrc
 else
-	echo "[AUTO-CUDA] There's no bashrc backup found.."
+	echo "[AUTO-CUDA] There isn't bashrc backup found.."
 if
